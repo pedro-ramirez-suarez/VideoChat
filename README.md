@@ -13,4 +13,4 @@ Using the following open source projects:
 
 <b>Important </b> SSE is not supported on Internet Explorer(any version), also, for some reason SSE does not work fine on IIS Express, so use normal IIS instead.
 
-
+TODO: Talk about limitations and other implementation details

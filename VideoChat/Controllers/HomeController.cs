@@ -61,8 +61,11 @@ namespace VideoChat.Controllers
                 //Inline = false,
             };
             Response.AppendHeader("Content-Disposition", cd.ToString());
-
-            return new FileStreamResult(audios[id], "audio/vnd.wave");
+            //get the audio
+            var audio =audios[id];
+            //remove it from the list
+            audios.Remove(id);
+            return new FileStreamResult(audio, "audio/vnd.wave");
         }
 
         [HttpPost]

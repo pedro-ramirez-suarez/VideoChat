@@ -1,0 +1,96 @@
+﻿
+@{
+    ViewBag.Title = "Video Chat";
+}
+
+<div class="row">
+
+    <div class="col-lg-6">
+        <h4>@ViewBag.UserName</h4>
+        <div class="alert alert-warning" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Alert!</span>
+            Give(Allow) permission to webcam and micro
+        </div>
+        <video id="video" width="120" height="90" autoplay></video>
+        <audio controls src="" id="audio" style="visibility:hidden"></audio>
+        @*<button id="snap">Snap Photo</button>*@
+        
+    </div>
+
+    <div class="col-lg-4" style="margin-top:110px">
+        <img id="remoteVideo" />
+        <canvas id="canvas" width="120" height="90" style="visibility:hidden"></canvas>
+        
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+<script src="@Url.Content("~/Scripts/NeedletailMvc.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/VideoChat.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/record.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/recorder.js")" type="text/javascript"></script>
+
+
+<script language="javascript" type="text/javascript">
+        
+        var pushVideoUrl = '@Url.Action("PushVideo","Home")';
+        var pushAudioUrl = '@Url.Action("PushAudio","Home")';
+        var updateAudioUrl = '@Url.Action("GetAudio","Home")';
+        var WORKER_PATH = '@Url.Content("~/scripts/recorderWorker.js")';
+        //Web Cam initialization
+        window.addEventListener("DOMContentLoaded", function () {
+
+            //Needletail MVC SSE initialization
+            var twoway = '@Url.Action("Remote", "Api", new { })';
+            needleTail.initialize(twoway);
+
+            // Grab elements, create settings, etc.
+            var canvas = document.getElementById("canvas"),
+                context = canvas.getContext("2d"),
+                video = document.getElementById("video"),
+                videoObj = { "video": true },
+                errBack = function (error) {
+                    console.log("Video capture error: ", error.code);
+                };
+            var remoteVideo = document.getElementById('remoteVideo');
+            
+
+            //update the context once in a while
+            setInterval(function () {
+                context.drawImage(video, 0, 0, 120, 90);
+                //push audio and video to the server
+                pushVideo(canvas.toDataURL());
+            }, 200);
+
+            setInterval(function () {
+                context.drawImage(video, 0, 0, 320, 240);
+                //push audio and video to the server
+                pushAudio();
+            }, 800);
+
+
+            // Put video listeners into place
+            if (navigator.getUserMedia) { // Standard
+                navigator.getUserMedia(videoObj, function (stream) {
+                    video.src = stream;
+                    video.play();
+                }, errBack);
+            } else if (navigator.webkitGetUserMedia) { // WebKit-prefixed
+                navigator.webkitGetUserMedia(videoObj, function (stream) {
+                    video.src = window.webkitURL.createObjectURL(stream);
+                    video.play();
+                }, errBack);
+            }
+            else if (navigator.mozGetUserMedia) { // Firefox-prefixed
+                navigator.mozGetUserMedia(videoObj, function (stream) {
+                    video.src = window.URL.createObjectURL(stream);
+                    video.play();
+                }, errBack);
+            }
+        }, false);
+
+    
+        
+</script>
+

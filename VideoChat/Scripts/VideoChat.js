@@ -5,7 +5,7 @@ var pendingFrames = [];
 
 function pushFrame() {
     context.drawImage(video, 0, 0, 120, 90);
-    var data = canvas.toDataURL();
+    var data = canvas.toDataURL('image/png');
     //store the frame
     frames.push(data);
     setTimeout(function () {

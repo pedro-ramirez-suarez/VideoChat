@@ -25,7 +25,7 @@
         command: 'record',
         buffer: [
           e.inputBuffer.getChannelData(0),
-          e.inputBuffer.getChannelData(1)
+          //e.inputBuffer.getChannelData(1) //STEREO AUDIO
         ]
       });
     }

@@ -136,33 +136,7 @@ function toggleMono() {
     audioInput.connect(inputPoint);
 }
 
-//This function grabs the current audio and sends it to the server
-function pushAudio() {
-    
-    if (audioRecorder == undefined || audioRecorder == null)
-        return;
-    //reset the audio
-    audioRecorder.stop();
 
-    //if there is much difference between audio and video, you can send both togehter here in the callback
-    audioRecorder.exportWAV(function (audio) {
-        var formData = new FormData();
-        formData.append('edition[audio]', audio)
-        //console.log(formData);
-        $.ajax({
-            type: 'POST',
-            url: pushAudioUrl,
-            data: formData,
-            contentType: false,
-            cache: false,
-            processData: false,
-        });
-        
-     });
-
-    audioRecorder.clear();
-    audioRecorder.record();
-}
 
 
 function gotStream(stream) {

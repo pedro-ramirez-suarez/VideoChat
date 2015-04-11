@@ -28,27 +28,34 @@ namespace VideoChat.Controllers
             return View("Chat");
         }
 
+        /// <summary>
+        /// Receives audio from a user
+        /// </summary>
         [HttpPost]
         public JsonResult PushAudio()
         {
+            //Get the audio stream and store it on a local collection
             MemoryStream ms = new MemoryStream();
             Request.Files[0].InputStream.CopyTo(ms);
             ms.Position = 0;
             string id = Guid.NewGuid().ToString().Replace("-", "");
             audios.Add(id,ms);
-            
-            //get the other users
+
+            //send the audio to everyone but me
             var receivers = RemoteController.Users.Where(u => u != Request.Cookies["videoChatUser"].Value);
-            //send the audio to everyone
             foreach (var u in receivers)
             {
                 dynamic call = new ClientCall { CallerId = Request.Cookies["videoChatUser"].Value, ClientId = u };
+                //since we cannot send the audio, we just send the ID of the audio that we just received
                 call.updateAudio(id);
                 RemoteExecution.ExecuteOnClient(call, false);
             }
             return Json(new { success = true });
         }
 
+        /// <summary>
+        /// Gets the audio stream requested
+        /// </summary>
         public FileResult GetAudio(string id)
         {
 
@@ -63,21 +70,25 @@ namespace VideoChat.Controllers
             Response.AppendHeader("Content-Disposition", cd.ToString());
             //get the audio
             var audio =audios[id];
-            //remove it from the list
+            //remove it from the local list
             audios.Remove(id);
             return new FileStreamResult(audio, "audio/vnd.wave");
         }
 
+        /// <summary>
+        /// Receives image from the user
+        /// </summary>
+        /// <param name="video">the image</param>
         [HttpPost]
         public ActionResult PushVideo(string video)
         {
-            //get the other users
+            //send the video to everyone but me
             var receivers = RemoteController.Users.Where(u => u != Request.Cookies["videoChatUser"].Value);
-            //send the audio to everyone
             foreach (var u in receivers)
             {
+                //we send the video, and the user who sent it
                 dynamic call = new ClientCall { CallerId = Request.Cookies["videoChatUser"].Value, ClientId = u };
-                call.updateVideo(video);
+                call.updateVideo(video,u);
                 try
                 {
                     RemoteExecution.ExecuteOnClient(call, true);

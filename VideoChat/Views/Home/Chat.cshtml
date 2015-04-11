@@ -22,7 +22,7 @@
     <div class="col-lg-4">
         <h4 id="remoteUser"></h4>
         <img id="remoteVideo" width="320" height="240" />
-        <canvas id="canvas" width="160" height="120" style="visibility:hidden"></canvas>
+        <canvas id="canvas" width="120" height="90" style="visibility:hidden"></canvas>
 
     </div>
 </div>
@@ -39,6 +39,8 @@
     //global variables
     var pushVideoUrl = '@Url.Action("PushVideo","Home")';
     var pushAudioUrl = '@Url.Action("PushAudio","Home")';
+    var pushVideoFragmentUrl = '@Url.Action("PushVideoFragment", "Home")';
+    
     var updateAudioUrl = '@Url.Action("GetAudio","Home")';
     var WORKER_PATH = '@Url.Content("~/scripts/recorderWorker.js")';
     var canvas = document.getElementById("canvas"),
@@ -58,19 +60,17 @@
         var twoway = '@Url.Action("Remote", "Api", new { })';
         needleTail.initialize(twoway);
 
-        /*
-        We use different intervals since we need to collect bigger audio sample, otherwise the words are very hard to understand
-        */
-        //send video
+        
+        //constantly show remote frames
+        updateVideo();
+        //constantly store frames
+        pushFrame();
+
+        //prepare stream to be sent
         setInterval(function () {
             //push audio and video to the server
-            pushVideo(canvas.toDataURL());
-        }, 150);
-        //send audio
-        setInterval(function () {
-            //push audio and video to the server
-            pushAudio();
-        }, 800);
+            prepareStream();
+        }, 1000);
 
 
         // Put video listeners into place

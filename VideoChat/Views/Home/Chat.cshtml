@@ -43,6 +43,8 @@
     
     var updateAudioUrl = '@Url.Action("GetAudio","Home")';
     var WORKER_PATH = '@Url.Content("~/scripts/recorderWorker.js")';
+    var mp3WorkerPath = '@Url.Content("~/scripts/mp3Worker.js")';
+
     var canvas = document.getElementById("canvas"),
         context = canvas.getContext("2d"),
         video = document.getElementById("video"),

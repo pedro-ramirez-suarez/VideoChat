@@ -69,7 +69,7 @@ namespace VideoChat.Controllers
 
             var cd = new System.Net.Mime.ContentDisposition
             {
-                FileName = string.Format("{0}.wav", id),
+                FileName = string.Format("{0}.mp3", id),
 
                 // always prompt the user for downloading, set to true if you want 
                 // the browser to try to show the file inline
@@ -80,7 +80,7 @@ namespace VideoChat.Controllers
             var audio =audios[id];
             //remove it from the local list
             audios.Remove(id);
-            return new FileStreamResult(audio, "audio/vnd.wave");
+            return new FileStreamResult(audio, "audio/mpeg");
         }
 
        

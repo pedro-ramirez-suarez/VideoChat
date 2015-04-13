@@ -22,7 +22,12 @@ function prepareStream() {
     //Export the audio as a wav file
     audioRecorder.exportWAV(function (audio) {
         currentAudio = audio;
-        sendAudioAndVideo();
+        //convert to url data
+        var reader = new FileReader();
+        reader.onload = function (event) {
+            sendAudioAndVideo();
+        };
+        reader.readAsDataURL(audio);
     });
     //reset the audio and start recording again
     audioRecorder.clear();
@@ -63,6 +68,8 @@ function updateVideoFragment(id, remoteFrames, user) {
     //console.log(remoteFrames);
     //update frames
     for (var x in remoteFrames) {
+        if (remoteFrames[x].length == 0)
+            continue;
         pendingFrames.push(remoteFrames[x]);
     }
 

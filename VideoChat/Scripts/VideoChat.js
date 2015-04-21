@@ -10,7 +10,7 @@ function pushFrame() {
     frames.push(data);
     setTimeout(function () {
         pushFrame();
-    }, 200);
+    }, 150);
 }
 
 function prepareStream() {
@@ -91,7 +91,7 @@ function updateVideo() {
     }
     setTimeout(function () {
         updateVideo();
-    },200);
+    },150);
     
 }
 

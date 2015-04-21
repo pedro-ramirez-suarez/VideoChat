@@ -40,8 +40,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Needletail.Mvc">
-      <HintPath>..\packages\Needletail.Mvc.1.0.0.1\lib\net40\Needletail.Mvc.dll</HintPath>
+    <Reference Include="Needletail.Mvc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Needletail.Mvc.1.0.0.3\lib\net40\Needletail.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -203,7 +204,9 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\jquery.voice.min.js" />
+    <Content Include="Scripts\libmp3lame.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\mp3Worker.js" />
     <Content Include="Scripts\NeedletailMvc.js" />
     <Content Include="Scripts\record.js" />
     <Content Include="Scripts\recorder.js" />

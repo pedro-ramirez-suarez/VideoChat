@@ -10,7 +10,7 @@ function pushFrame() {
     frames.push(data);
     setTimeout(function () {
         pushFrame();
-    }, 150);
+    }, 200);
 }
 
 function prepareStream() {
@@ -83,15 +83,15 @@ function updateVideoFragment(id, remoteFrames, user) {
 
 //process always frame 0
 function updateVideo() {
-    //remove framw 0
-    if (pendingFrames.length > 0) {
+    //remove frame 0
+    if (pendingFrames.length > 0) 
         pendingFrames.shift();
-        //show new image    
+    //show new image    
+    if (pendingFrames[0] != undefined && pendingFrames[0]!= null)
         image.src = pendingFrames[0];
-    }
     setTimeout(function () {
         updateVideo();
-    },150);
+    },200);
     
 }
 

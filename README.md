@@ -1,5 +1,7 @@
 # VideoChat
 
+<a href="http://pedro-ramirez-suarez.github.io/VideoChat">Home page</a>
+
 <p>A video chat with HTML5 + javascript + Server Sent Events</p>
 
 <p>Created with Asp.Net MVC 5 and <a href="https://github.com/pedro-ramirez-suarez/needletailtools/wiki/Using-Needletail.Mvc" target="_blank">Needletail.MVC</a> to facilitate SSE</p>

@@ -34,11 +34,11 @@
 
 <ul>
 <li>SSE is not peer to peer, neither bi-directional, nor full duplex, so it's slower.</li>
-<li>The ammount of data received and sent is bigger with SSE, to upload data to the server, you need to send it as a file, or as a string, if you send strings you need to be sure that those are Base64(which increase the size) otherwise the server may reject the request, also, when sending data to the client, you can only serve files or strings, as incomming connections, you need to convert those strings to Base64 or the server may not send the info that you want.</li>
+<li>The ammount of data received and sent is bigger with SSE, to upload data to the server, you need to send it as a file, or as a string, if you send strings you need to be sure that those are Base64(which increase the size) otherwise the server may reject the request, also, when sending data form the server to the client, you can only do it either serving files or sending strings.</li>
 <li>Trial and error is the way you sicronize the image and audio.</li>
 </ul>
 
-<p>The application supports only two users, but with minor changes it may support many more.</p>
+<p>The application supports only two users, but with minor changes it may support more.</p>
 
 <p>It uses  the following open source projects:</p>
 

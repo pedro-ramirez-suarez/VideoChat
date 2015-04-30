@@ -34,11 +34,8 @@ function prepareStream() {
     audioRecorder.record();
 }
 
-//var flag = false;
-//Send all the data
+//Send frames and audio to the server
 function sendAudioAndVideo() {
-    //if (!flag)
-    //    return;
     var formData = new FormData();
     //set the frames
     for (var x in frames) {
@@ -61,11 +58,10 @@ function sendAudioAndVideo() {
         cache: false,
         processData: false,
     });
-    //flag = false;
 }
 
+//this method is "invoked" from the HomeController in the server, it receives all the frames and some ID to get the audio
 function updateVideoFragment(id, remoteFrames, user) {
-    //console.log(remoteFrames);
     //update frames
     for (var x in remoteFrames) {
         if (remoteFrames[x].length == 0)
